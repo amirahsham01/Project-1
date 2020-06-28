@@ -4,138 +4,81 @@ console.log(test);
 //frames per second
 const FPS = 30;
 
-//setup canvas
+//setting game loop
+window.requestAnimationFrame = window.requestAnimationFrame
+    || window.mozRequestAnimationFrame
+    || window.webkitRequestAnimationFrame
+    || window.msRequestAnimationFrame
+    || function(f){return setTimeout(f, 1000/FPS)}
+
+window.cancelAnimationFrame = window.cancelAnimationFrame
+    || window.mozCancelAnimationFrame
+    || function(requestID){clearTimeout(requestID)}
+
+// //setup canvas
 let gameCanvas = document.querySelector("#game-canvas");
 let gameCtx = gameCanvas.getContext('2d');
 
-//create ship
-const turningSpeed = 270; //degrees per second
-// const friction = 0.7;
-const shipSize = 30; //size in pixels
-const shipThrust = 5; //5 pixels forward/backwards when moving up and down
-let ship = {
-    x: gameCanvas.width/2,
-    y: gameCanvas.height/2,
-    r: shipSize/2,
-    a: 90/180 * Math.PI, //convert to radians
-    rotate: 0,
-    forwards: false,
-    front: {
-        x: 0,
-        y: 0
-    },
-    backwards: false,
-    back: {
-        x: 0,
-        y: 0
-    }
+//putting key codes into an array so we can add and remove easily
+const keys = [];
 
+//ship properties
+const turningSpeed = 360;
+const spaceshipThrust = 5;
+const ship = {
+    x: 300,
+    y: 310,
+    width: 120,
+    height: 120,
+    frameX: 0,
+    frameY: 3,
+    speed: 5,
+    moving: false,
+};
+
+//drawing our images
+const shipSprite = new Image();
+shipSprite.src = "falcon-sprite-01.png";
+// const background = new Image();
+// background.src = "...";
+
+function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
+    gameCtx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
 }
 
-//setup event listeners
-document.addEventListener("keydown", keyDown);
-document.addEventListener("keyup", keyUp);
-
-//setting game loop
-setInterval(update, 1000 / FPS);
-
-//all 'dem functions
-function keyDown(e) {
-    switch(e.keyCode) {
-        case 37: //left arrow to rotate ship
-            ship.rotate = turningSpeed/180 * Math.PI/FPS //convert to radians
-            break;
-        case 38: //up arrow to move up
-            ship.forwards = true;
-            break;
-        case 40: //down arrow to move down
-            ship.backwards = true;
-            break;
-        case 39: //right arrow to rotate ship
-            ship.rotate = -turningSpeed/180 * Math.PI/FPS
-            break;
-    }
+function animate() {
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    drawSprite(shipSprite, ship.width * ship.frameX, ship.height * ship.frameY, ship.width, ship.height, ship.x, ship.y, ship.width, ship.height);
+    moveShip();
+    requestAnimationFrame(animate);
 }
+animate();
 
-function keyUp(e) {
-    switch(e.keyCode) {
-        case 37: //stop from rotating
-            ship.rotate = 0;
-            break;
-        case 38:
-            ship.forwards = false;
-            break;
-        case 40:
-            ship.backwards = false;
-            break;
-        case 39:
-            ship.rotate = 0;
-            break;
+// setup event listeners
+window.addEventListener("keydown", function(e) {
+    keys[e.keyCode] = true;
+});
+
+window.addEventListener("keyup", function(e) {
+    delete keys[e.keyCode];
+});
+
+//move ship
+function moveShip() {
+    if (keys[38] && ship.y > 0) {
+        ship.y -= ship.speed;
+        ship.frameY = 3;
     }
-}
-
-function update() {
-    //draw space
-    gameCtx.fillStyle = "black";
-    gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-    //thrusting the ship forward
-    if(ship.forwards) {
-        ship.front.x += shipThrust * Math.cos(ship.a)/FPS;
-        ship.front.y -= shipThrust * Math.sin(ship.a)/FPS;
-    } else {
-        ship.front.x -= ship.front.x/FPS;
-        ship.front.y -= ship.front.y/FPS;
+    if (keys[37] && ship.x > 0) {
+        ship.x -= ship.speed;
+        ship.frameY = 1;
     }
-
-    //moving backwards
-    if(ship.backwards) {
-        ship.back.x -= shipThrust * Math.cos(ship.a)/FPS;
-        ship.back.y += shipThrust * Math.sin(ship.a)/FPS;
-    } else {
-        ship.back.x -= ship.back.x/FPS;
-        ship.back.y -= ship.back.y/FPS;
+    if (keys[40] && ship.y <= gameCanvas.height - ship.height) {
+        ship.y += ship.speed;
+        ship.frameY = 0;
     }
-    
-
-    //draw ship - starting with a triangle first
-    gameCtx.strokeStyle = "white",
-    gameCtx.lineWidth = shipSize/20;
-    gameCtx.beginPath();
-    gameCtx.moveTo( //tip of triangle
-        ship.x + 4/3 * ship.r * Math.cos(ship.a),
-        ship.y - 4/3 * ship.r * Math.sin(ship.a)
-    );
-    gameCtx.lineTo( //left line
-        ship.x - ship.r * (2/3 * Math.cos(ship.a) + Math.sin(ship.a)),
-        ship.y + ship.r * (2/3 * Math.sin(ship.a) - Math.cos(ship.a))
-    )
-    gameCtx.lineTo( //right line
-        ship.x - ship.r * (2/3 * Math.cos(ship.a) - Math.sin(ship.a)),
-        ship.y + ship.r * (2/3 * Math.sin(ship.a) + Math.cos(ship.a))
-    )
-    gameCtx.closePath();
-    gameCtx.stroke();
-
-    //rotate ship
-    ship.a += ship.rotate;
-
-    //move the ship
-    ship.x += ship.front.x;
-    ship.y += ship.front.y;
-    ship.x += ship.back.x;
-    ship.y += ship.back.y;
-    
-    //ensure ship does not move off the screen
-    if (ship.x <= 30) {
-        ship.x = 30;
-    } else if (ship.x >= gameCanvas.width - shipSize) {
-        ship.x = gameCanvas.width - shipSize; 
+    if (keys[39] && ship.x <= gameCanvas.width - ship.width) {
+        ship.x += ship.speed;
+        ship.frameY = 2;
     }
-    if (ship.y < 30) {
-        ship.y = 30;
-    } else if (ship.y >= gameCanvas.height - shipSize) {
-        ship.y = gameCanvas.height - shipSize; 
-    }
-
 }
