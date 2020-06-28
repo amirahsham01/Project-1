@@ -6,14 +6,11 @@ const FPS = 30;
 
 //setting game loop
 window.requestAnimationFrame = window.requestAnimationFrame
-    || window.mozRequestAnimationFrame
-    || window.webkitRequestAnimationFrame
-    || window.msRequestAnimationFrame
     || function(f){return setTimeout(f, 1000/FPS)}
 
 window.cancelAnimationFrame = window.cancelAnimationFrame
-    || window.mozCancelAnimationFrame
     || function(requestID){clearTimeout(requestID)}
+
 
 // //setup canvas
 let gameCanvas = document.querySelector("#game-canvas");
