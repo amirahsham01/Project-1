@@ -1,5 +1,5 @@
 html {
-    background-color: thistle;
+    background-color: black;
 }
 
 #container {
@@ -10,4 +10,21 @@ html {
     background-color: black;
     width: 700px;
     height: 500px;
+    border: 1px solid ghostwhite;
+    outline: 2px solid red;
+    outline-offset: 25px;
+}
+
+#game-canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+#battle-canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
 }
