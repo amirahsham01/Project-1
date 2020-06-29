@@ -77,13 +77,13 @@ let maxEnemies = 12;
 
 //image repository
 const shipSprite = new Image();
-shipSprite.src = "/Users/nuramirahsham/Desktop/GENERAL_ASSEMBLY/PROJECTS/Project-1/imgs/falcon-sprite-01.png";
+shipSprite.src = "imgs/falcon-sprite-01.png";
 const background = new Image();
-background.src = "/Users/nuramirahsham/Desktop/GENERAL_ASSEMBLY/PROJECTS/Project-1/imgs/space-bg-2.png";
+background.src = "imgs/space-bg-2.png";
 let laserBullet = new Image();
-laserBullet.src = "/Users/nuramirahsham/Desktop/GENERAL_ASSEMBLY/PROJECTS/Project-1/imgs/enemy-bullet.png"
+laserBullet.src = "imgs/enemy-bullet.png"
 const enemyBullet = new Image();
-enemyBullet.src = "/Users/nuramirahsham/Desktop/GENERAL_ASSEMBLY/PROJECTS/Project-1/imgs/enemy-bullet.png";
+enemyBullet.src = "imgs/enemy-bullet.png";
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
     gameCtx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
