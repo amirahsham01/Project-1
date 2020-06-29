@@ -1,4 +1,4 @@
-# Project-1
+# Project 1 - The Last Rebellion
 The Last Rebellion
 
 Inspired by a classic 1970s arcade game, this version is themed after Star Wars.
