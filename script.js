@@ -51,8 +51,8 @@ let kills = 0;
 let bullet = {
     x: 0,
     y: 0,
-    width: 5,
-    height: 20,
+    width: 4,
+    height: 14,
     speed: 16,
 }
 
