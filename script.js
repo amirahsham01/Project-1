@@ -1,154 +1,111 @@
-//frames per second
-const FPS = 20;
+//define variables and properties of ship, enemy and bullets
+let ship = {
+    left: 320,
+    top: 400,
+};
+
+//store bullets drawn in array for easy removal
+let bullets = [];
+
+//total enemies
+let enemies = [
+    { left: 90, top: 0 },
+    { left: 160, top: 0 },
+    { left: 230, top: 0 },
+    { left: 300, top: 0 },
+    { left: 370, top: 0 },
+    { left: 440, top: 0 },
+    { left: 510, top: 0 },
+    { left: 580, top: 0 },
+    { left: 90, top: 75 },
+    { left: 160, top: 75 },
+    { left: 230, top: 75 },
+    { left: 300, top: 75 },
+    { left: 370, top: 75 },
+    { left: 440, top: 75 },
+    { left: 510, top: 75 },
+    { left: 580, top: 75 },
+];
+
+//function to call when player press keys
+document.onkeydown = function(e) {
+    if (e.keyCode === 37) {
+        // Left
+        ship.left = ship.left - 10;
+    }
+    if (e.keyCode === 39) {
+        // Right
+        ship.left = ship.left + 10;
+    }
+    if (e.keyCode === 32) {
+        // Spacebar (fire)
+        bullets.push({
+            left: ship.left + 20,
+            top: ship.top - 20 
+        });
+        drawLasers()
+    }
+    drawShip();
+}
+
+//getting main objects to display at specified position
+function drawShip() {
+    document.getElementById('ship').style.left = ship.left + 'px';
+    document.getElementById('ship').style.top = ship.top + 'px';
+}
+
+function drawLasers() {
+    document.getElementById('laser-bullets').innerHTML = ""
+    for(var i = 0 ; i < bullets.length ; i++ ) {
+        document.getElementById('laser-bullets').innerHTML += `<div class='bullet1' style='left:${bullets[i].left}px; top:${bullets[i].top}px'></div>`;
+    }
+}
+
+function drawEnemies() {
+    document.getElementById('enemies').innerHTML = ""
+    for(var i = 0 ; i < enemies.length ; i++ ) {
+        document.getElementById('enemies').innerHTML += `<div class='enemy' style='left:${enemies[i].left}px; top:${enemies[i].top}px'></div>`;
+    }
+}
+
+//get lasers shot to be instantanouesly moving
+function moveLasers() {
+    for(var i = 0 ; i < bullets.length ; i++ ) {
+        bullets[i].top = bullets[i].top - 8
+    }
+}
+
+//get enemies to fly downwards from top of screen
+function moveEnemies() {
+    for(var i = 0 ; i < enemies.length ; i++ ) {
+        enemies[i].top = enemies[i].top + 1;
+    }
+}
+
+//remove enemies when succesfully shot by player
+function collisionDetection() {
+    for (var enemy = 0; enemy < enemies.length; enemy++) {
+        for (var bullet = 0; bullet < bullets.length; bullet++) {
+            if ( 
+                bullets[bullet].left >= enemies[enemy].left  &&
+                bullets[bullet].left <= (enemies[enemy].left + 50)  &&
+                bullets[bullet].top <= (enemies[enemy].top + 50)  &&
+                bullets[bullet].top >= enemies[enemy].top
+            ) {
+                enemies.splice(enemy, 1);
+                bullets.splice(bullet, 1);
+            }
+        }
+    }
+}
 
 //setting game loop
-window.requestAnimationFrame = window.requestAnimationFrame
-    || function(f){return setTimeout(f, 1000/FPS)}
-
-window.cancelAnimationFrame = window.cancelAnimationFrame
-    || function(requestID){clearTimeout(requestID)}
-
-// keyCodes = {
-//     32: 'space',
-//     37: 'left',
-//     38: 'up',
-//     39: 'right',
-//     40: 'down',
-// }
-
-//setup canvas
-let gameCanvas = document.querySelector("#game-canvas");
-let gameCtx = gameCanvas.getContext('2d');
-let battleCanvas = document.querySelector("#battle-canvas");
-let battleCtx = battleCanvas.getContext('2d');
-
-//putting key codes into an array so we can add and remove easily
-const keys = [];
-
-
-//ship properties
-let ship = {
-    x: 300,
-    y: 310,
-    width: 120,
-    height: 120,
-    frameX: 0,
-    frameY: 3,
-    speed: 5,
-    health: 5,
-    moving: false,
-    disableShoot: true,
-    alive: true
+function gameLoop() {
+    setTimeout(gameLoop, 100)
+    moveLasers();
+    drawLasers();
+    moveEnemies();
+    drawEnemies();
+    collisionDetection();
 }
-
-let score = 0;
-let kills = 0;
-
-//bullet properties
-let bullet = {
-    x: 0,
-    y: 0,
-    width: 4,
-    height: 14,
-    speed: 16,
-}
-
-let bulletPool = [];
-let maxBullets = 10;
-
-//enemy ship properties
-let enemyShip = {
-    x: 300,
-    y: 310,
-    width: 120,
-    height: 120,
-    frameX: 0,
-    frameY: 3,
-    speed: 2,
-    health: 2
-}
-
-let enemies = [];
-let maxEnemies = 12;
-
-
-//image repository
-const shipSprite = new Image();
-shipSprite.src = "imgs/falcon-sprite-01.png";
-const background = new Image();
-background.src = "imgs/space-bg-2.png";
-let laserBullet = new Image();
-laserBullet.src = "imgs/bullet.png"
-const enemyBullet = new Image();
-enemyBullet.src = "imgs/enemy-bullet.png";
-
-function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
-    gameCtx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
-}
-
-// setup event listeners
-window.addEventListener("keydown", function(e) {
-    keys[e.keyCode] = true;
-});
-
-window.addEventListener("keyup", function(e) {
-    if((e) == 38 || 37 || 40 || 39) {
-            delete keys[e.keyCode];
-        } else if ((e) == 32) {
-            disableShoot = false;
-        }
-});
-
-//move ship
-function moveShip() {
-    if (keys[38] && ship.y > 0) {
-        ship.y -= ship.speed;
-        ship.frameY = 3;
-        ship.moving = true;
-    }
-    if (keys[37] && ship.x > 0) {
-        ship.x -= ship.speed;
-        ship.frameY = 1;
-        ship.moving = true;
-    }
-    if (keys[40] && ship.y <= gameCanvas.height - ship.height) {
-        ship.y += ship.speed;
-        ship.frameY = 0;
-        ship.moving = true;
-    }
-    if (keys[39] && ship.x <= gameCanvas.width - ship.width) {
-        ship.x += ship.speed;
-        ship.frameY = 2;
-        ship.moving = true;
-    }
-}
-
-//function to draw bullets
-//indicate conditional for reload distance
-//indicate bullet position for every ship frame
-//include loop to splice bullet in bulletpool array once it goes offscreen
-function enableShoot() {
-    if(keys[32]) {
-        disableShoot = true;
-        shoot();
-    }
-}
-
-function shoot() {
-    if(ship.alive && bulletPool.length < maxBullets) {
-        //indicate conditional for bullet position with ship position
-        bullet.x = ship.x + 57;
-        bullet.y = ship.y - 10;
-        battleCtx.drawImage(laserBullet, bullet.x, bullet.y, bullet.width, bullet.height);
-}
-}
-
-function animate() {
-    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    gameCtx.drawImage(background, 0, 0, gameCanvas.width, gameCanvas.height);
-    drawSprite(shipSprite, ship.width * ship.frameX, ship.height * ship.frameY, ship.width, ship.height, ship.x, ship.y, ship.width, ship.height);
-    moveShip();
-    enableShoot();
-    requestAnimationFrame(animate);
-}
-animate();
+gameLoop();
