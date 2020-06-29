@@ -1,6 +1,3 @@
-var test = "oi what";
-console.log(test);
-
 //frames per second
 const FPS = 20;
 
@@ -81,7 +78,7 @@ shipSprite.src = "imgs/falcon-sprite-01.png";
 const background = new Image();
 background.src = "imgs/space-bg-2.png";
 let laserBullet = new Image();
-laserBullet.src = "imgs/enemy-bullet.png"
+laserBullet.src = "imgs/bullet.png"
 const enemyBullet = new Image();
 enemyBullet.src = "imgs/enemy-bullet.png";
 
