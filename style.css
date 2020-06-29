@@ -6,25 +6,53 @@ html {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: black;
+    transform: translate(-50%, -50%);;
     width: 700px;
     height: 500px;
+    background-image: url('imgs/bg.png');
     border: 1px solid ghostwhite;
     outline: 2px solid red;
     outline-offset: 25px;
 }
 
-#game-canvas {
+#ship {
+    width: 70px;
+    height: 84px;
+    background-image: url('imgs/ship.png');
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 310px;
+    top: 400px; 
     z-index: 1;
 }
 
-#battle-canvas {
+#laser-bullets {
+    width: 700px;
+    height: 500px;
     position: absolute;
     left: 0px;
     top: 0px;
     z-index: 2;
+}
+
+.bullet1 {
+    width: 5px;
+    height: 24px;
+    background-image: url('imgs/bullet.png');
+    position: absolute;
+}
+
+#enemies {
+    width: 700px;
+    height: 500px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 3;
+}
+
+.enemy {
+    width: 30px;
+    height: 48px;
+    background-image: url('imgs/enemy.png');
+    position: absolute;
 }
