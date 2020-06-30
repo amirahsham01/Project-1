@@ -1,18 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@keyframes flickerAnimation {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
+}
+
 html {
     background-color: black;
+    font-family: 'Press Start 2P', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 #container {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);;
+    transform: translate(-50%, -50%);
     width: 700px;
     height: 500px;
     background-image: url('imgs/bg.png');
     border: 1px solid ghostwhite;
     outline: 2px solid red;
     outline-offset: 25px;
+}
+
+#top-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    padding: 20px;
+}
+
+#start {
+    position: relative;
+    margin-top: 70px;
+    color: rgb(255, 174, 0);
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.animate-flicker {
+    animation: flickerAnimation .5s infinite;
+}
+
+#click {
+    display: block;
+    margin: 0px auto;
+    margin-top: 90px;
+    position: relative;
+    border: none;
+    text-transform: uppercase;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 21px;
+    color: red;
+    background-color: black;
+    border-top: 3px solid red;
+    border-bottom: 3px solid red;
+    padding: 16px;
+}
+
+#click:hover {
+    color: rgb(255, 174, 0);
+    border-top: 3px solid rgb(255, 174, 0);
+    border-bottom: 3px solid rgb(255, 174, 0);
+    animation: flickerAnimation 0s;
+}
+
+#background {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 700px;
+    height: 500px;
+    z-index: 1;
 }
 
 #ship {
@@ -22,7 +87,7 @@ html {
     position: absolute;
     left: 310px;
     top: 400px; 
-    z-index: 1;
+    z-index: 2;
 }
 
 #laser-bullets {
@@ -31,7 +96,7 @@ html {
     position: absolute;
     left: 0px;
     top: 0px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .bullet1 {
@@ -47,7 +112,7 @@ html {
     position: absolute;
     left: 0px;
     top: 0px;
-    z-index: 3;
+    z-index: 4;
 }
 
 .enemy {

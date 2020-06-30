@@ -9,22 +9,22 @@ let bullets = [];
 
 //total enemies
 let enemies = [
-    { left: 90, top: 0 },
-    { left: 160, top: 0 },
-    { left: 230, top: 0 },
-    { left: 300, top: 0 },
-    { left: 370, top: 0 },
-    { left: 440, top: 0 },
-    { left: 510, top: 0 },
-    { left: 580, top: 0 },
-    { left: 90, top: 75 },
-    { left: 160, top: 75 },
-    { left: 230, top: 75 },
-    { left: 300, top: 75 },
-    { left: 370, top: 75 },
-    { left: 440, top: 75 },
-    { left: 510, top: 75 },
-    { left: 580, top: 75 },
+    { left: 125, top: 30 },
+    { left: 185, top: 30 },
+    { left: 245, top: 30 },
+    { left: 305, top: 30 },
+    { left: 365, top: 30 },
+    { left: 425, top: 30 },
+    { left: 485, top: 30 },
+    { left: 545, top: 30 },
+    { left: 125, top: 85 },
+    { left: 185, top: 85 },
+    { left: 245, top: 85 },
+    { left: 305, top: 85 },
+    { left: 365, top: 85 },
+    { left: 425, top: 85 },
+    { left: 485, top: 85 },
+    { left: 545, top: 85 },
 ];
 
 //function to call when player press keys
@@ -40,7 +40,7 @@ document.onkeydown = function(e) {
     if (e.keyCode === 32) {
         // Spacebar (fire)
         bullets.push({
-            left: ship.left + 20,
+            left: ship.left + 37,
             top: ship.top - 20 
         });
         drawLasers()
@@ -80,7 +80,7 @@ function moveEnemies() {
     for(let i = 0 ; i < enemies.length ; i++ ) {
         enemies[i].top = enemies[i].top + 1;
 
-        if (enemies[i].top >= 440) {
+        if (enemies[i].top >= 400) {
             alert("You lost");
             break;
         }
@@ -114,11 +114,36 @@ function collisionDetection() {
 
 //setting game loop
 function gameLoop() {
-    setTimeout(gameLoop, 100)
+    setTimeout(gameLoop, 90)
     moveLasers();
     drawLasers();
     moveEnemies();
     drawEnemies();
     collisionDetection();
 }
-gameLoop();
+
+//hide start button
+//change display of #background to block
+const startButton = document.querySelector("#start");
+const game = document.querySelector("#background");
+
+function start() {
+    if (startButton.style.display = "block") {
+        startButton.style.display = "none";
+    } else 
+    if (startButton.style.display = "none") {
+        startButton.style.display = "block";
+    }
+
+    if (game.style.display = "none") {
+        game.style.display = "block";
+    } else 
+    if (game.style.display = "block") {
+        game.style.display = "none";
+    }
+}
+
+document.querySelector("#click").addEventListener('click', () => {
+    start();
+    gameLoop();
+});

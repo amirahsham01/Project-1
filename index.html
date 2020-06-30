@@ -7,9 +7,22 @@
   </head>
   <body>
     <div id='container'>
-      <div id="ship"></div>
-      <div id="laser-bullets"></div>
-      <div id="enemies"></div>
+      <div id="top-text">
+        <span style="color: rgb(0, 231, 19);">score  <span id="score" style="color: ghostwhite;">0</span></span>
+        <span style="color: rgb(0, 231, 19);">high score <span id="hiscore" style="color: ghostwhite;">10</span></span>
+      </div>
+
+      <div id="background">
+        <div id="ship"></div>
+        <div id="laser-bullets"></div>
+        <div id="enemies"></div>
+      </div>
+
+      <div id="start">
+        <img src="imgs/logo.png" style="width: 450px; height: 85;">
+        <p>- imperial invaders -</p>
+        <button id="click" class="animate-flicker">start game</button>
+      </div>
     </div>
     <script src="script.js"></script>
 </body>
