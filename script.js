@@ -56,36 +56,42 @@ function drawShip() {
 
 function drawLasers() {
     document.getElementById('laser-bullets').innerHTML = ""
-    for(var i = 0 ; i < bullets.length ; i++ ) {
+    for(let i = 0 ; i < bullets.length ; i++ ) {
         document.getElementById('laser-bullets').innerHTML += `<div class='bullet1' style='left:${bullets[i].left}px; top:${bullets[i].top}px'></div>`;
     }
 }
 
 function drawEnemies() {
     document.getElementById('enemies').innerHTML = ""
-    for(var i = 0 ; i < enemies.length ; i++ ) {
+    for(let i = 0 ; i < enemies.length ; i++ ) {
         document.getElementById('enemies').innerHTML += `<div class='enemy' style='left:${enemies[i].left}px; top:${enemies[i].top}px'></div>`;
     }
 }
 
 //get lasers shot to be instantanouesly moving
 function moveLasers() {
-    for(var i = 0 ; i < bullets.length ; i++ ) {
-        bullets[i].top = bullets[i].top - 8
+    for(let i = 0 ; i < bullets.length ; i++ ) {
+        bullets[i].top = bullets[i].top - 8;
     }
 }
 
 //get enemies to fly downwards from top of screen
 function moveEnemies() {
-    for(var i = 0 ; i < enemies.length ; i++ ) {
+    for(let i = 0 ; i < enemies.length ; i++ ) {
         enemies[i].top = enemies[i].top + 1;
+
+        if (enemies[i].top >= 440) {
+            alert("You lost");
+            break;
+        }
     }
 }
 
-//remove enemies when succesfully shot by player
+//remove enemies when succesfully shot by player 
+// or when reaching edges of container
 function collisionDetection() {
-    for (var enemy = 0; enemy < enemies.length; enemy++) {
-        for (var bullet = 0; bullet < bullets.length; bullet++) {
+    for (let enemy = 0; enemy < enemies.length; enemy++) {
+        for (let bullet = 0; bullet < bullets.length; bullet++) {
             if ( 
                 bullets[bullet].left >= enemies[enemy].left  &&
                 bullets[bullet].left <= (enemies[enemy].left + 50)  &&
@@ -95,6 +101,13 @@ function collisionDetection() {
                 enemies.splice(enemy, 1);
                 bullets.splice(bullet, 1);
             }
+            if (bullets[bullet].top <= 10) {
+                bullets.splice(bullet, 1);
+            }
+            // if (enemies[enemy].top >= 450) {
+            //     alert("You lost");
+            //     break;
+            // }
         }
     }
 }
