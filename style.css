@@ -11,6 +11,7 @@ html {
     font-family: 'Press Start 2P', monospace;
     text-transform: uppercase;
     letter-spacing: 2px;
+    color: ghostwhite;
 }
 
 #container {
@@ -31,6 +32,54 @@ html {
     justify-content: space-between;
     font-size: 16px;
     padding: 20px;
+    color: rgb(0, 231, 19);
+}
+
+#score {
+    color: ghostwhite;
+}
+
+#bottom-screen {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+#play-audio {
+    margin-top: 60px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#controls {
+    margin-top: 50px;
+}
+
+#enter-name {
+    background-color: transparent;
+    width: 200px;
+    margin-top: 60px;
+    margin-bottom: 25px;
+    outline: none;
+    border: none;
+    border-top: 2px solid rgb(255, 174, 0);
+    border-bottom: 2px solid rgb(255, 174, 0);
+    color: rgb(255, 174, 0);
+    padding: 16px;
+    font-family: 'Press Start 2P', monospace;
+    letter-spacing: 1px;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#enter-name::placeholder {
+    color: rgb(173, 119, 1);
+    text-align: center;
+}
+
+#enter-name:focus {
+    animation: flickerAnimation 0s;
 }
 
 #start {
@@ -48,14 +97,16 @@ html {
 }
 
 #click {
-    display: block;
+    display: none;
     margin: 0px auto;
-    margin-top: 90px;
+    margin-top: 75px;
+    margin-bottom: 22px;
     position: relative;
+    outline: none;
     border: none;
     text-transform: uppercase;
     font-family: 'Press Start 2P', monospace;
-    font-size: 21px;
+    font-size: 18px;
     color: red;
     background-color: black;
     border-top: 3px solid red;

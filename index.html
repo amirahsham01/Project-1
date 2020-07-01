@@ -4,12 +4,15 @@
     <meta charset="utf-8">        
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="style.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   </head>
   <body>
+
     <div id='container'>
+      <audio src="audio/main.mp3" id="main"></audio>
       <div id="top-text">
-        <span style="color: rgb(0, 231, 19);">score  <span id="score" style="color: ghostwhite;">0</span></span>
-        <span style="color: rgb(0, 231, 19);">high score <span id="hiscore" style="color: ghostwhite;">10</span></span>
+        <span id="player-name">score <span style="color: ghostwhite;">0</span></span>
+        <span>high score <span id="hiscore" style="color: ghostwhite;">16</span></span>
       </div>
 
       <div id="background">
@@ -19,10 +22,19 @@
       </div>
 
       <div id="start">
-        <img src="imgs/logo.png" style="width: 450px; height: 85;">
+        <img src="imgs/logo.png" style="width: 450px; height: 85;" class="glitch">
         <p>- imperial invaders -</p>
+        <input type="text" id="enter-name" class="animate-flicker" placeholder="enter name">
         <button id="click" class="animate-flicker">start game</button>
+        <div id="bottom-screen">
+          <div id="controls"><img src="imgs/keys.png" style="width: 150px; height: 34;"></div>
+          <div id="play-audio">
+            <span class="fas" id="play">&#xf04b;</span>
+            <span class="fas" id="pause">&#xf04c;</span>
+          </div>
+        </div>
       </div>
+
     </div>
     <script src="script.js"></script>
 </body>

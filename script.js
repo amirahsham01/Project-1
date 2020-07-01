@@ -1,3 +1,14 @@
+
+//audio repository
+let main = new Audio('audio/main.mp3');
+document.getElementById('play').addEventListener('click', function() {
+    main.play();
+    main.loop = true;
+});
+document.getElementById('pause').addEventListener('click', function() {
+    main.pause();
+});
+
 //define variables and properties of ship, enemy and bullets
 let ship = {
     left: 320,
@@ -26,6 +37,10 @@ let enemies = [
     { left: 485, top: 85 },
     { left: 545, top: 85 },
 ];
+
+//player score
+let score = 0;
+let highScore = document.querySelector("#hiscore").textContent;
 
 //function to call when player press keys
 document.onkeydown = function(e) {
@@ -98,18 +113,21 @@ function collisionDetection() {
                 bullets[bullet].top <= (enemies[enemy].top + 50)  &&
                 bullets[bullet].top >= enemies[enemy].top
             ) {
+                score += 1;
                 enemies.splice(enemy, 1);
                 bullets.splice(bullet, 1);
-            }
+                console.log(score);
+            } else
             if (bullets[bullet].top <= 10) {
                 bullets.splice(bullet, 1);
             }
-            // if (enemies[enemy].top >= 450) {
-            //     alert("You lost");
-            //     break;
-            // }
         }
     }
+}
+
+//displaying score
+function displayScore() {
+    document.querySelector("#player-name").textContent = `${enterName.value} ${score}`;
 }
 
 //setting game loop
@@ -121,6 +139,28 @@ function gameLoop() {
     drawEnemies();
     collisionDetection();
 }
+
+function updateScore() {
+    setInterval(updateScore, 4000)
+    displayScore();
+}
+
+//when player enters name, input field is hidden
+//start button shows and name is appended to game screen
+const clickStart = document.querySelector("#click");
+const enterName = document.querySelector("#enter-name");
+
+enterName.addEventListener('change', () => {
+    if (clickStart.style.display = "none") {
+        clickStart.style.display = "block";
+    }
+    if (enterName.style.display = "block") {
+        enterName.style.display = "none";
+    }
+    let playerName = enterName.value;
+    document.querySelector("#player-name").textContent = playerName + " " + 0;
+    console.log(playerName);
+});
 
 //hide start button
 //change display of #background to block
@@ -143,7 +183,8 @@ function start() {
     }
 }
 
-document.querySelector("#click").addEventListener('click', () => {
+clickStart.addEventListener('click', () => {
     start();
     gameLoop();
+    updateScore();
 });
