@@ -133,7 +133,7 @@ function moveLasers() {
 //get enemies to fly downwards from top of screen
 function moveEnemies() {
     for(let i = 0 ; i < enemies.length ; i++ ) {
-        enemies[i].top = enemies[i].top + 1;
+        enemies[i].top = enemies[i].top + 2;
 
         if (enemies[i].top >= 400) {
             gameOver();
@@ -152,7 +152,7 @@ function gameOver() {
 function moveEnemiesLevelTwo() {
     if(enemies.length == 0) {
         for(let i = 0 ; i < enemiesTwo.length ; i++ ) {
-            enemiesTwo[i].top = enemiesTwo[i].top + 2;
+            enemiesTwo[i].top = enemiesTwo[i].top + 3;
     
             if (enemiesTwo[i].top >= 380) {
                 gameOver();
