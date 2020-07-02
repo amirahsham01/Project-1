@@ -32,8 +32,12 @@ the screen.
 - I then sticked to very basic HTML and Javascript using 'url.src' to 'draw' out the images
 - My only regret was not using OOP, classes and constructors enough as I was still struggling to comprehend its use
 
-## Future plans
+## Further
 - To add more levels and increase difficulty because 'Space Invaders' was known to be a game 'that never ends', and that was what hooks players in
 - Add boss battles
+
+### Credits
+pixelartmaker.com
+
 
 
