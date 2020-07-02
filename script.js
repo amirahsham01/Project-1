@@ -136,9 +136,16 @@ function moveEnemies() {
         enemies[i].top = enemies[i].top + 1;
 
         if (enemies[i].top >= 400) {
-            alert("You lost");
+            gameOver();
             break;
         }
+    }
+}
+
+function gameOver() {
+    let restart = document.getElementById('game-over');
+    if (restart.style.display = "none") {
+        restart.style.display = "block";
     }
 }
 
@@ -147,14 +154,13 @@ function moveEnemiesLevelTwo() {
         for(let i = 0 ; i < enemiesTwo.length ; i++ ) {
             enemiesTwo[i].top = enemiesTwo[i].top + 2;
     
-            if (enemiesTwo[i].top >= 400) {
-                alert("You lost");
+            if (enemiesTwo[i].top >= 380) {
+                gameOver();
                 break;
             }
         }
     }
 }
-
 
 //remove enemies when succesfully shot by player 
 // or when reaching edges of container
