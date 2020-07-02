@@ -1,6 +1,7 @@
 
 //audio repository
 let main = new Audio('audio/main.mp3');
+let blaster = new Audio('audio/blaster.mp3');
 document.getElementById('play').addEventListener('click', function() {
     main.play();
     main.loop = true;
@@ -38,27 +39,57 @@ let enemies = [
     { left: 545, top: 85 },
 ];
 
+let enemiesTwo = [
+    { left: 125, top: 30 },
+    { left: 185, top: 30 },
+    { left: 245, top: 30 },
+    { left: 305, top: 30 },
+    { left: 365, top: 30 },
+    { left: 425, top: 30 },
+    { left: 485, top: 30 },
+    { left: 545, top: 30 },
+    { left: 125, top: 85 },
+    { left: 185, top: 85 },
+    { left: 245, top: 85 },
+    { left: 305, top: 85 },
+    { left: 365, top: 85 },
+    { left: 425, top: 85 },
+    { left: 485, top: 85 },
+    { left: 545, top: 85 },
+];
+
 //player score
 let score = 0;
-let highScore = document.querySelector("#hiscore").textContent;
 
-//function to call when player press keys
-document.onkeydown = function(e) {
-    if (e.keyCode === 37) {
-        // Left
-        ship.left = ship.left - 10;
+//putting key codes into an array so we can add and remove easily
+const keys = [];
+
+document.addEventListener("keydown", function(e) {
+    if((e) == 32 || 37 || 39) {
+        keys[e.keyCode] = true;
     }
-    if (e.keyCode === 39) {
-        // Right
-        ship.left = ship.left + 10;
+});
+
+document.addEventListener("keyup", function(e) {
+    if((e) == 32 || 37 || 39) {
+            delete keys[e.keyCode];
+        }
+});
+
+function controlShip() {
+    if (keys[37] && ship.left >= 0) {
+        ship.left -= 12;
     }
-    if (e.keyCode === 32) {
-        // Spacebar (fire)
+    if (keys[39] && ship.left <= 620) {
+        ship.left += 12;
+    }
+    if (keys[32]) {
         bullets.push({
             left: ship.left + 37,
             top: ship.top - 20 
         });
-        drawLasers()
+        blaster.play();
+        drawLasers();
     }
     drawShip();
 }
@@ -83,6 +114,15 @@ function drawEnemies() {
     }
 }
 
+function drawEnemiesLevelTwo() {
+    if(enemies.length == 0) {
+        document.getElementById('enemies').innerHTML = "";
+        for(let i = 0 ; i < enemiesTwo.length ; i++ ) {
+            document.getElementById('enemies').innerHTML += `<div class='enemy' style='left:${enemiesTwo[i].left}px; top:${enemiesTwo[i].top}px'></div>`;
+        }
+    }
+}
+
 //get lasers shot to be instantanouesly moving
 function moveLasers() {
     for(let i = 0 ; i < bullets.length ; i++ ) {
@@ -102,8 +142,30 @@ function moveEnemies() {
     }
 }
 
+function moveEnemiesLevelTwo() {
+    if(enemies.length == 0) {
+        for(let i = 0 ; i < enemiesTwo.length ; i++ ) {
+            enemiesTwo[i].top = enemiesTwo[i].top + 2;
+    
+            if (enemiesTwo[i].top >= 400) {
+                alert("You lost");
+                break;
+            }
+        }
+    }
+}
+
+
 //remove enemies when succesfully shot by player 
 // or when reaching edges of container
+function wallCollision() {
+    for (let bullet = 0; bullet < bullets.length; bullet++) {
+        if (bullets[bullet].top <= 10) {
+            bullets.splice(bullet, 1);
+        }
+    }
+}
+
 function collisionDetection() {
     for (let enemy = 0; enemy < enemies.length; enemy++) {
         for (let bullet = 0; bullet < bullets.length; bullet++) {
@@ -113,13 +175,29 @@ function collisionDetection() {
                 bullets[bullet].top <= (enemies[enemy].top + 50)  &&
                 bullets[bullet].top >= enemies[enemy].top
             ) {
-                score += 1;
+                score += 10;
                 enemies.splice(enemy, 1);
                 bullets.splice(bullet, 1);
-                console.log(score);
-            } else
-            if (bullets[bullet].top <= 10) {
-                bullets.splice(bullet, 1);
+            }
+        }
+    }
+}
+
+function collisionDetectionLevelTwo() {
+    if(enemies.length == 0) {
+
+        for (let enemy = 0; enemy < enemiesTwo.length; enemy++) {
+            for (let bullet = 0; bullet < bullets.length; bullet++) {
+                if ( 
+                    bullets[bullet].left >= enemiesTwo[enemy].left  &&
+                    bullets[bullet].left <= (enemiesTwo[enemy].left + 50)  &&
+                    bullets[bullet].top <= (enemiesTwo[enemy].top + 50)  &&
+                    bullets[bullet].top >= enemiesTwo[enemy].top
+                ) {
+                    score += 10;
+                    enemiesTwo.splice(enemy, 1);
+                    bullets.splice(bullet, 1);
+                }
             }
         }
     }
@@ -133,11 +211,16 @@ function displayScore() {
 //setting game loop
 function gameLoop() {
     setTimeout(gameLoop, 90)
+    controlShip();
     moveLasers();
     drawLasers();
+    wallCollision();
     moveEnemies();
+    moveEnemiesLevelTwo();
     drawEnemies();
+    drawEnemiesLevelTwo();
     collisionDetection();
+    collisionDetectionLevelTwo();
 }
 
 function updateScore() {
