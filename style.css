@@ -180,12 +180,15 @@ html {
     top: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    background-image: url('imgs/DarthVader.png');
+    width: 600px;
+    height: 379px;
 }
 
 .over {
     position: absolute;
     left: 50%;
-    top: 65%;
+    top: 60%;
     transform: translate(-50%, -50%);
     background-color: rgba(255, 0, 0, 0.9);
     width: 230px;
