@@ -1,6 +1,6 @@
 # SG SEI-23 - Project 1
 
-<a href="http://https://amirahsham01.github.io/proj1-last-rebellion/">The Last Rebellion</a>
+<a href="https://amirahsham01.github.io/proj1-last-rebellion/">The Last Rebellion</a>
 
 <img src="imgs/sample.gif">
 
