@@ -1,0 +1,56 @@
+Approach and Process
+What in my process and approach to this project would I do differently next time?
+
+Before starting out on any project, I should list out the tasks that needs to be completed to build
+the game. This is to prevent myself from being lost in my own code, when things don't work and bugs
+in the application starts to accumulate. I realised that breaking down the problem into smaller parts
+helps the programmer to stay focused and manage the time given to complete the project better.
+--
+
+What in my process and approach to this project went well that I would repeat next time?
+
+I wanted to attempt to build the game using the canvas tag. And in that process, I looked up tutorials
+by other developers and free code exercises online to practice and familiarize myself with using canvas.
+Even though I did not manage to complete that version, I still learnt new things. And I guess, research,
+practice and lots of trial and error really helps when you are building an application of your own.
+
+--
+
+Code and Code Design
+What in my code and program design in the project would I do differently next time?
+
+I would organise my code better such that the spaceships and user will first be a class of its own
+instead of having to hard code each and single one of the ships that appears in the page. The game 
+stops at the second wave of ships, hence if I'd applied class and constructors from the start, i 
+would have been able to keep the game rolling until the user actually dies. The user is currently 
+able to move his/her ship outside of the screen as I forgot to set the boundaries of where the user 
+ship can move. I should also focus less on the look/aesthetics of the game and work on getting the 
+game to function perfectly before adding in any CSS.
+--
+
+What in my code and program design in the project went well? Is there anything I would do the same next time?
+
+Geting the audio to work when user shoots out lasers and being able to print out the images of the
+user ships and enemy ships. Successfully used for loops and settimeout to animate items on the screen,
+and that made me understand loops in javascript much better.
+--
+
+For each, please include code examples.
+
+Code snippet up to 20 lines.
+Code design documents or architecture drawings / diagrams.
+
+WDI Unit 1 Post Mortem
+What habits did I use during this unit that helped me?
+- Writing pseudocode before any other line to establish aims of the program really helps to
+streamline the workload
+- Using consistent indentation to the best of my abilities
+- File and folder structure
+- Naming conventions
+
+What habits did I have during this unit that I can improve on?
+- OOP!!!!
+- To keep code simple and readable as possible
+
+How is the overall level of the course during this unit? (instruction, course materials, etc.)
+- 9/10
